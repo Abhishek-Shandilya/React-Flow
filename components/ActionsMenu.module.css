@@ -1,0 +1,95 @@
+.icon {
+    transition: transform 500ms;
+    width: fit-content;
+    filter: invert(80%);
+    inset-inline-end: 0;
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    z-index: 6;
+    cursor: pointer;
+}
+
+.icon[data-darkmode=true] {
+    filter: invert(40%);
+}
+
+.icon:hover {
+    filter: invert(70%);
+}
+
+.rotate-right {
+    transform: translateY(-50%) rotate(0deg);
+}
+
+.rotate-left {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.container {
+    background-color: white;
+    height: 100%;
+    transition: width 250ms;
+    position: absolute;
+    z-index: 4;
+    display: flex;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-inline-end: 1px solid lightgrey;
+}
+
+.container[data-darkmode=true] {
+    background-color: var(--light10);
+    border-color: var(--light20);
+}
+
+.relative {
+    position: relative;
+    width: 100%;
+}
+
+.small-width {
+    width: 4rem;
+}
+
+.large-width {
+    width: 12.5%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+    padding: 0.5rem 0;
+}
+
+.button {
+    font-size: 1rem;
+    padding: 0.5rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+}
+
+.button_logo {
+    filter: brightness(80%);
+}
+
+.button_logo[data-darkmode=false] {
+    filter: invert(100%);
+}
+
+.button[data-darkmode=true] {
+    background-color: var(--light10);
+    color: var(--light80);
+}
+
+.button:hover {
+    background-color: var(--light95);
+}
+
+.button[data-darkmode=true]:hover {
+    background-color: var(--light20);
+}

@@ -1,0 +1,28 @@
+.node {
+    outline: 1px solid black;
+    border-radius: 4px;
+    padding: 0.2rem 0.4rem;
+    transition: outline-style 1s;
+}
+
+.node[data-darkmode=true] {
+    background-color: var(--light10);
+    outline-color: rgb(126, 0, 84);
+    color: var(--light80);
+}
+
+.content {
+    display: flex;
+    column-gap: 0.2rem;
+}
+
+.content_icon {
+    filter: brightness(80%);
+}
+
+.content_firstRow {
+    display: flex;
+    align-items: center;
+    column-gap: 0.1rem;
+    flex-direction: row;
+}
