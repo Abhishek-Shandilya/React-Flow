@@ -21,7 +21,8 @@ export default function PropsMenu({ nodes, setNodes }) {
                     temp.data = {
                         ...temp.data,
                         type: targetValue,
-                        arn: "Choose"
+                        arn: "Choose",
+                        integration: ""
                     };
                 }
                 return temp;
@@ -31,15 +32,22 @@ export default function PropsMenu({ nodes, setNodes }) {
     }
     const onDataSourceChange = (e) => {
         const targetValue = e.target.value
+        let datasource = null
         setNodes((nds) =>
             nds.map((node) => {
                 let temp = { ...node }
+                if (temp.data.type === 'fetcher') {
+                    datasource = fetchers.find(fetcher => fetcher.arn === targetValue)
+                }
+                else {
+                    datasource = listeners.find(listener => listener.arn === targetValue)
+                }
                 if (node.id === selectedNode.id) {
                     // it's important that you create a new object here
                     // in order to notify react flow about the change
                     temp.data = {
                         ...temp.data,
-                        arn: targetValue,
+                        ...datasource
                     };
                 }
                 return temp;
@@ -95,7 +103,7 @@ export default function PropsMenu({ nodes, setNodes }) {
                                                 color: "var(--light80)",
                                             }}>{option.value}</option>)}</select>}</>
                         }
-                        {selectedNode?.data.arn && selectedNode?.data.arn !== null &&
+                        {(selectedNode?.data.arn || selectedNode?.data.arn === "") && selectedNode?.data.arn !== null &&
                             <select
                                 value={selectedNode?.data.arn}
                                 onChange={(e) => onDataSourceChange(e)}
@@ -107,6 +115,12 @@ export default function PropsMenu({ nodes, setNodes }) {
                                     padding: "0.25rem 0.5rem",
                                     border: "none"
                                 }}>
+                                <option
+                                    value={""}
+                                    style={{
+                                        backgroundColor: "var(--light10)",
+                                        color: "var(--light80)",
+                                    }}>Choose</option>
                                 {dataSourceOptions.map((option, index) => <option
                                     value={option.arn}
                                     key={index}

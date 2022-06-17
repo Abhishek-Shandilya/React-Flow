@@ -1,11 +1,12 @@
 import { Handle } from "react-flow-renderer";
 import { useSelector } from "react-redux";
 import styles from './nodes.module.css'
+import { useMemo } from "react";
 
 export default function DataSourceNode({ data, sourcePosition, id }) {
     const darkMode = useSelector(state => state.global.darkMode)
     const iconSrc = data.type === "listener" ? "/images/conversion_path.svg" : "/images/cable.svg"
-    const integrationSrc = `/images/${data.integration}.svg`
+    const integrationSrc = useMemo(() => `/images/${data.integration}.svg`, [data])
     return (
         <div
             id={id}
@@ -15,7 +16,9 @@ export default function DataSourceNode({ data, sourcePosition, id }) {
             <div
                 id={id}
                 className={styles.content}>
-                <img src={integrationSrc} height={24} />
+                {data.integration &&
+                    <img src={integrationSrc} height={24} />
+                }
                 <div>
                     <div
                         id={id}
