@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const globalSlice = createSlice({
     name: "global",
     initialState: {
-        darkMode: true
+        darkMode: false
     },
     reducers: {
         setDarkMode: (state, { payload }) => {

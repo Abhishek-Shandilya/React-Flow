@@ -1,17 +1,20 @@
-import { useMemo, useState } from "react"
+import { Select, Form } from "antd"
+import { useMemo } from "react"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import fetchers from "../data/fetchers"
 import listeners from "../data/listeners"
 import styles from "./PropsMenu.module.css"
 
+const { Item } = Form
+const { Option } = Select;
+
 export default function PropsMenu({ nodes, setNodes }) {
     const { selectedNode, propsVisible } = useSelector(state => state.botData.dataProps)
+    const [form] = Form.useForm()
     const darkMode = useSelector(state => state.global.darkMode)
-    const [chooseDataSource, setChooseDataSource] = useState(false)
     const dispatch = useDispatch()
-    const onInputChange = (e) => {
-        const targetValue = e.target.value
+    const onInputChange = (value) => {
         setNodes((nds) =>
             nds.map((node) => {
                 let temp = { ...node }
@@ -20,27 +23,26 @@ export default function PropsMenu({ nodes, setNodes }) {
                     // in order to notify react flow about the change
                     temp.data = {
                         ...temp.data,
-                        type: targetValue,
-                        arn: "Choose",
+                        type: value,
+                        arn: "choose",
                         integration: ""
                     };
                 }
                 return temp;
             })
         );
-        dispatch({ type: "botData/setSelectedNodeDataType", payload: targetValue })
+        form.resetFields(['arn'])
     }
-    const onDataSourceChange = (e) => {
-        const targetValue = e.target.value
+    const onDataSourceChange = (value) => {
         let datasource = null
         setNodes((nds) =>
             nds.map((node) => {
                 let temp = { ...node }
                 if (temp.data.type === 'fetcher') {
-                    datasource = fetchers.find(fetcher => fetcher.arn === targetValue)
+                    datasource = fetchers.find(fetcher => fetcher.arn === value)
                 }
                 else {
-                    datasource = listeners.find(listener => listener.arn === targetValue)
+                    datasource = listeners.find(listener => listener.arn === value)
                 }
                 if (node.id === selectedNode.id) {
                     // it's important that you create a new object here
@@ -53,13 +55,12 @@ export default function PropsMenu({ nodes, setNodes }) {
                 return temp;
             })
         );
-        dispatch({ type: "botData/setSelectedNodeArn", payload: targetValue })
     }
     const options = [
         { value: "fetcher" },
         { value: "listener" }
     ]
-    const dataSourceOptions = useMemo(() => selectedNode?.data.type === 'fetcher' ? fetchers : listeners, [fetchers, listeners, selectedNode])
+    const dataSourceOptions = useMemo(() => form.getFieldValue('type') === 'fetcher' ? fetchers : listeners, [fetchers, listeners, form.getFieldValue('type')])
     return (
         <>{propsVisible &&
             <div
@@ -78,59 +79,54 @@ export default function PropsMenu({ nodes, setNodes }) {
                             height={24} /></button>
                 </div>
                 {nodes.length > 0 &&
-                    <div
-                        className={styles.content}
-                        data-darkmode={darkMode}>
-                        {selectedNode?.id}
-                        {selectedNode?.data.type &&
-                            <>
-                                {chooseDataSource === false &&
-                                    <p
-                                        onClick={() => setChooseDataSource(true)}
-                                        className={styles.p}>{selectedNode.data.type}</p>}
-                                {chooseDataSource === true &&
-                                    <select
-                                        value={selectedNode.data.type}
-                                        onChange={(e) => onInputChange(e)}
-                                        onBlur={() => setChooseDataSource(false)}
-                                        className={styles.select}
+                    <>
+                        <p className={styles.id}>{selectedNode?.id}</p>
+                        <div
+                            className={styles.content}
+                            data-darkmode={darkMode}>
+                            <Form
+                                name="props"
+                                form={form}
+                                className={styles.content}
+                                initialValues={selectedNode?.data}>
+                                {selectedNode?.data.type &&
+                                    <Item name={"type"}>
+                                        <Select
+                                            placeholder={"Choose Datasource Type"}
+                                            onChange={(value) => onInputChange(value)}
+                                            className={styles.select}>
+                                            {options.map((option, index) => <Option
+                                                value={option.value}
+                                                key={index}
+                                                className={styles.option}
+                                            >{option.value}</Option>)}
+                                        </Select>
+                                    </Item>
+                                }
+                                {(selectedNode?.data.arn || selectedNode?.data.arn === "") &&
+                                    <Item
+                                        noStyle
+                                        dependencies={['type']}
                                     >
-                                        {options.map((option, index) => <option
-                                            value={option.value}
-                                            key={index}
-                                            style={{
-                                                backgroundColor: "var(--light10)",
-                                                color: "var(--light80)",
-                                            }}>{option.value}</option>)}</select>}</>
-                        }
-                        {(selectedNode?.data.arn || selectedNode?.data.arn === "") && selectedNode?.data.arn !== null &&
-                            <select
-                                value={selectedNode?.data.arn}
-                                onChange={(e) => onDataSourceChange(e)}
-                                style={{
-                                    backgroundColor: "inherit",
-                                    color: "inherit",
-                                    fontSize: "1rem",
-                                    outline: "none",
-                                    padding: "0.25rem 0.5rem",
-                                    border: "none"
-                                }}>
-                                <option
-                                    value={""}
-                                    style={{
-                                        backgroundColor: "var(--light10)",
-                                        color: "var(--light80)",
-                                    }}>Choose</option>
-                                {dataSourceOptions.map((option, index) => <option
-                                    value={option.arn}
-                                    key={index}
-                                    style={{
-                                        backgroundColor: "var(--light10)",
-                                        color: "var(--light80)",
-                                    }}>{option.arn}</option>)}
-                            </select>
-                        }
-                    </div>
+                                        {({ getFieldValue }) =>
+                                            <>{getFieldValue('type') &&
+                                                <Item name={"arn"}>
+                                                    <Select
+                                                        placeholder={"Choose Datasource"}
+                                                        onChange={(value) => onDataSourceChange(value)}
+                                                        className={styles.select}>
+                                                        {dataSourceOptions.map((option, index) => <Option
+                                                            value={option.arn}
+                                                            key={index}
+                                                        >{option.arn}</Option>)}
+                                                    </Select>
+                                                </Item>}</>
+                                        }
+                                    </Item>
+                                }
+                            </Form>
+                        </div>
+                    </>
                 }
             </div>
         }

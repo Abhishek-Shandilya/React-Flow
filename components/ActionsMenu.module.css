@@ -66,11 +66,12 @@
 
 .button {
     font-size: 1rem;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     background-color: white;
     display: flex;
     align-items: center;
     column-gap: 1rem;
+    text-align: start;
 }
 
 .button_logo {

@@ -2,16 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const selectedNodeInitialState = {
     id: null,
-    data: { label: "", type: null, arn: null }
+    data: { label: "", type: null, arn: null, integration: "" }
 }
+const nodesQInitialState = []
+const edgesQInitialState = []
 
 export const botDataSlice = createSlice({
     name: "botData",
     initialState: {
         dataProps: {
-            propsVisible: false,
-            selectedNode: selectedNodeInitialState
-        }
+            propsVisible: true,
+            selectedNode: selectedNodeInitialState,
+            nodes: [],
+            nodesQ: nodesQInitialState,
+            edgesQ: edgesQInitialState
+        },
     },
     reducers: {
         setPropsVisible: (state, { payload }) => {
@@ -20,21 +25,12 @@ export const botDataSlice = createSlice({
         setSelectedNode: (state, { payload }) => {
             state.dataProps.selectedNode = payload
         },
-        setSelectedNodeLabel: (state, { payload }) => {
-            state.dataProps.selectedNode.data.label = payload
-        },
-        setSelectedNodeDataType: (state, { payload }) => {
-            state.dataProps.selectedNode.data.type = payload
-        },
-        setSelectedNodeArn: (state, { payload }) => {
-            state.dataProps.selectedNode.data.arn = payload
-        },
         resetSelectedNode: (state) => {
             state.dataProps.selectedNode = selectedNodeInitialState
-        }
+        },
     }
 })
 
-export const { setPropsVisible, setSelectedNode, setSelectedNodeLabel, setSelectedNodeArn, resetSelectedNode } = botDataSlice.actions
+export const { setPropsVisible, setSelectedNode, setSelectedNodeLabel, setSelectedNodeArn, resetSelectedNode, setSelectedNodeDataType } = botDataSlice.actions
 
 export default botDataSlice.reducer

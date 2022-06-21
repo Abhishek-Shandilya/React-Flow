@@ -5,14 +5,14 @@ import { useDispatch } from "react-redux"
 import fetchers from "../data/fetchers"
 import styles from "./ActionsMenu.module.css"
 
-const initialMinimizeState = false
+const initialMinimizeState = true
 
 export default function ActionsMenu({ nodes, setNodes }) {
     const dispatch = useDispatch()
     const darkMode = useSelector(state => state.global.darkMode)
     const [minimize, setMinimize] = useState(initialMinimizeState)
     const dataSourceNode = useMemo(() => nodes.find(node => node.type === 'datasource'), [nodes])
-    const { setCenter } = useReactFlow()
+    const { setCenter, toObject } = useReactFlow()
     const addNode = (label, type, dataType) => {
         let x = label === "Action" ? 210 : 110
         let y = 50
@@ -56,6 +56,10 @@ export default function ActionsMenu({ nodes, setNodes }) {
             onClick: () => dispatch({ type: 'global/toggleDarkMode' }),
             text: "Toggle DarkMode",
             logo: darkMode ? "/images/dark_mode_filled.svg" : "/images/dark_mode.svg"
+        },
+        {
+            onClick: () => console.log(toObject()),
+            text: "Save"
         }
     ]
     return (

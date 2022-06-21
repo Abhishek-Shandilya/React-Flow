@@ -1,13 +1,20 @@
 .node {
-    outline: 1px solid black;
+    outline: 1px solid var(--light60);
     border-radius: 4px;
-    padding: 0.2rem 0.4rem;
+    padding: 0.4rem;
     transition: outline-style 1s;
+    position: relative;
+    background-color: white;
+}
+
+.nodeSelected {
+    outline-color: goldenrod;
+    box-shadow: 0px 0px 4px goldenrod;
 }
 
 .node[data-darkmode=true] {
     background-color: var(--light10);
-    outline-color: rgb(126, 0, 84);
+    outline-color: var(--purple25);
     color: var(--light80);
 }
 
@@ -17,7 +24,7 @@
 }
 
 .content_icon {
-    filter: brightness(80%);
+    filter: brightness(0%);
 }
 
 .content_firstRow {
@@ -25,4 +32,27 @@
     align-items: center;
     column-gap: 0.1rem;
     flex-direction: row;
+}
+
+.add_container {
+    position: absolute;
+    display: none;
+    inset-inline-end: 0%;
+    inset-block-start: 0%;
+    transform: translateX(50%) translateY(-50%);
+    column-gap: 0.2rem;
+    align-items: center;
+}
+
+.node:hover .add_container,
+.add_container:hover {
+    display: flex;
+}
+
+.arn {
+    font-size: 0.7rem;
+}
+
+.integrationIcon {
+    height: 20px;
 }

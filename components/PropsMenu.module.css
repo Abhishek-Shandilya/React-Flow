@@ -10,6 +10,7 @@
     display: flex;
     overflow-y: auto;
     overflow-x: hidden;
+    width: 20%;
 }
 
 .propsMenuContainer[data-darkmode=true] {
@@ -27,28 +28,23 @@
 }
 
 .content {
-    padding: 1rem;
+    padding: 0.5rem;
     display: flex;
-    row-gap: 1rem;
     flex-direction: column;
-}
-
-.select {
-    background-color: inherit;
-    color: inherit;
-    font-size: 1rem;
-    outline: none;
-    padding: 0.25rem 0.5rem;
-    border: none
-}
-
-.select:hover,
-.p:hover {
-    background-color: var(--light20);
 }
 
 .p {
     padding: 0.2rem 1rem;
     border-radius: 4px;
     user-select: none;
+}
+
+.id {
+    color: transparent;
+    position: absolute;
+    font-size: 10rem;
+    inset-inline-end: 0;
+    inset-block-end: 0;
+    z-index: -1;
+    -webkit-text-stroke: 1px var(--light80);
 }
