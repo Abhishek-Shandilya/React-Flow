@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react"
-import { useReactFlow } from "react-flow-renderer"
 import { useDispatch } from "react-redux"
 import styles from "./Add.module.css"
+import { useReactFlow } from "reactflow"
 
 export default function Add({ id, className, buttons, data }) {
     const [addError, setAddError] = useState("")

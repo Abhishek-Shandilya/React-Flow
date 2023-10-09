@@ -1,8 +1,9 @@
-import { Handle } from "react-flow-renderer";
+
 import { useSelector } from "react-redux";
 import styles from './nodes.module.css'
 import { useMemo } from "react";
 import Add from "../Add/Add";
+import { Handle } from "reactflow";
 
 export default function DataSourceNode({ data, sourcePosition, id }) {
     const darkMode = useSelector(state => state.global.darkMode)

@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { Handle } from "react-flow-renderer";
 import { useSelector } from "react-redux";
 import Add from "../Add/Add";
 import styles from './nodes.module.css'
+import { Handle } from "reactflow";
 
 export default function EvaluatorNode({ data, sourcePosition, targetPosition, id }) {
     const darkMode = useSelector(state => state.global.darkMode)

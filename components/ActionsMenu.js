@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react"
-import { useReactFlow } from "react-flow-renderer"
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux"
+import { useReactFlow } from "reactflow"
+import { useSelector, useDispatch } from "react-redux"
 import fetchers from "../data/fetchers"
 import styles from "./ActionsMenu.module.css"
 

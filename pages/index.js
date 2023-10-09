@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import ReactFlow, { addEdge, useEdgesState, useNodesState, useReactFlow, ReactFlowProvider } from "react-flow-renderer"
+import ReactFlow, { addEdge, useEdgesState, useNodesState, useReactFlow, ReactFlowProvider } from "reactflow"
 import DataSourceNode from "../components/nodeTypes/DataSourceNode";
 import Controllers from "../components/Controllers/Controllers";
 import EvaluatorNode from "../components/nodeTypes/EvaluatorNode";

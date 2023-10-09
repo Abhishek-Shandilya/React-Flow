@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { Background } from "react-flow-renderer";
-import { MiniMap } from "react-flow-renderer";
 import { useSelector } from "react-redux";
 import ActionsMenu from '../ActionsMenu'
 import PropsMenu from '../PropsMenu'
+import { Background, MiniMap } from "reactflow";
 
 export default function Controllers({ nodes, setNodes }) {
     const [miniMap, setMiniMap] = useState(false)
